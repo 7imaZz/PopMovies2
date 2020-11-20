@@ -1,17 +1,19 @@
 package com.example.popmovies2.adapters
 
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.popmovies2.R
 import com.example.popmovies2.adapters.MoviesAdapter.MoviesViewHolder
 import com.example.popmovies2.pojo.Result
+import com.example.popmovies2.ui.MovieDetailsActivity
 import com.squareup.picasso.Picasso
 
 class MoviesAdapter(private val context: Context, var movies: MutableList<Result>) : RecyclerView.Adapter<MoviesViewHolder>() {
@@ -47,6 +49,14 @@ class MoviesAdapter(private val context: Context, var movies: MutableList<Result
             .load(BASE_URL+IMAGE_SIZE+movies[position].poster_path)
             .placeholder(R.drawable.placeholder_movie)
             .into(holder.posterImageView)
+
+        holder.itemView.setOnClickListener{
+            val intent = Intent(context, MovieDetailsActivity::class.java)
+            val b = Bundle()
+            b.putParcelable("movie", movies[position])
+            intent.putExtra("b", b)
+            context.startActivity(intent)
+        }
 
     }
 }

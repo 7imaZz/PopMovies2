@@ -82,4 +82,20 @@ class MovieViewModel: ViewModel() {
             }
         })
     }
+
+
+    fun search(apiKey: String, title: String){
+        moviesClient.getInstance()!!.search(apiKey, title).enqueue(object : retrofit2.Callback<Movies>{
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Log.d(TAG, "onFailure: "+t.message)
+            }
+
+
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                movies = response.body()!!.results as MutableList<Result>
+                moviesLiveData.postValue(movies)
+            }
+        })
+    }
+
 }
