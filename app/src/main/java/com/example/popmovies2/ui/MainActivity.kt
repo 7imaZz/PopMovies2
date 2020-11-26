@@ -2,20 +2,15 @@ package com.example.popmovies2.ui
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
-import android.widget.Toast
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuItemCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.observe
 import androidx.viewpager2.widget.ViewPager2
 import com.example.popmovies2.R
 import com.example.popmovies2.adapters.SectionsPagerAdapter
-import com.example.popmovies2.viewmodel.MovieViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrategy
@@ -23,50 +18,45 @@ import com.google.android.material.tabs.TabLayoutMediator.TabConfigurationStrate
 
 class MainActivity : AppCompatActivity() {
 
-    var movieViewModel: MovieViewModel ?= null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        supportActionBar!!.elevation = 0F
+        if(savedInstanceState == null) {
 
-        val mainTabLayout: TabLayout = findViewById(R.id.main_tab)
-        val viewPager: ViewPager2 = findViewById(R.id.main_view_pager)
-        val sectionsPagerAdapter = SectionsPagerAdapter(this)
-        movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+            supportActionBar!!.elevation = 0F
 
+            val mainTabLayout: TabLayout = findViewById(R.id.main_tab)
+            val viewPager: ViewPager2 = findViewById(R.id.main_view_pager)
+            val sectionsPagerAdapter = SectionsPagerAdapter(this)
 
-        val tabLayoutMediator = TabLayoutMediator(mainTabLayout, viewPager,
-            TabConfigurationStrategy { tab: TabLayout.Tab, position: Int ->
+            val tabLayoutMediator = TabLayoutMediator(mainTabLayout, viewPager){ tab: TabLayout.Tab, position: Int ->
                 tab.text = sectionsPagerAdapter.getPageTitle(position)
                 viewPager.currentItem = 0
             }
-        )
 
-        viewPager.adapter = sectionsPagerAdapter
-        tabLayoutMediator.attach()
+            viewPager.adapter = sectionsPagerAdapter
+            tabLayoutMediator.attach()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         // Retrieve the SearchView and plug it into SearchManager
         // Retrieve the SearchView and plug it into SearchManager
-        val searchView = MenuItemCompat.getActionView(menu!!.findItem(R.id.search_menu)) as SearchView
+
+        val menuItem: MenuItem = menu!!.findItem(R.id.search_menu)
+        val searchView = menuItem.actionView as SearchView
         val searchManager =
             getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(s: String): Boolean {
-
-                movieViewModel!!.search("3b97af0112652688c49f023ecc57edb9", s)
-
-                movieViewModel!!.moviesLiveData.observe(this@MainActivity, Observer {
-                    if (it.isNotEmpty()){
-                        Toast.makeText(this@MainActivity, it[0].title, Toast.LENGTH_SHORT).show()
-                    }
-                })
+                searchView.setQuery("", false)
+                val intent = Intent(this@MainActivity, SearchActivity::class.java)
+                intent.putExtra("s", s)
+                startActivity(intent)
                 return true
             }
 
@@ -75,5 +65,19 @@ class MainActivity : AppCompatActivity() {
             }
         })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.fav_menu -> {
+                val intent = Intent(this@MainActivity, FavouriteActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.watchlist_menu -> {
+                val intent = Intent(this@MainActivity, WatchlistActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

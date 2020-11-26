@@ -8,8 +8,10 @@ import androidx.lifecycle.ViewModel
 import com.example.popmovies2.network.MoviesClient
 import com.example.popmovies2.pojo.Movies
 import com.example.popmovies2.pojo.Result
-import retrofit2.Call
-import retrofit2.Response
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 
 class MovieViewModel: ViewModel() {
 
@@ -19,83 +21,128 @@ class MovieViewModel: ViewModel() {
     private val moviesClient: MoviesClient = MoviesClient()
     var movies: MutableList<Result> = mutableListOf()
 
+    private val compositeDisposable = CompositeDisposable()
+
     fun getMostPopular(apiKey: String, page: Int, progress: ProgressBar){
-        moviesClient.getInstance()!!.getPopMovies(apiKey, page).enqueue(object : retrofit2.Callback<Movies>{
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.d(TAG, "onFailure: "+t.message)
-                progress.visibility = View.GONE
-            }
+        compositeDisposable.add(
+        moviesClient.getInstance().getPopMovies(apiKey, page)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableObserver<Movies>() {
+                override fun onComplete() {
+                    Log.d(TAG, "onComplete: ")
+                    progress.visibility = View.GONE
 
+                }
 
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                movies = response.body()!!.results as MutableList<Result>
-                moviesLiveData.postValue(movies)
-                progress.visibility = View.GONE
-            }
-        })
+                override fun onNext(t: Movies) {
+                    moviesLiveData.postValue(t.results as MutableList<Result>?)
+                }
+
+                override fun onError(e: Throwable) {
+                    Log.e(TAG, "onError: "+e.message)
+                }
+
+            })
+        )
     }
 
     fun getTop(apiKey: String, page: Int, progress: ProgressBar){
-        moviesClient.getInstance()!!.getTopMovies(apiKey, page).enqueue(object : retrofit2.Callback<Movies>{
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.d(TAG, "onFailure: "+t.message)
-                progress.visibility = View.GONE
-            }
+        compositeDisposable.add(
+            moviesClient.getInstance().getTopMovies(apiKey, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableObserver<Movies>() {
+                    override fun onComplete() {
+                        Log.d(TAG, "onComplete: ")
+                        progress.visibility = View.GONE
+                    }
 
+                    override fun onNext(t: Movies) {
+                        moviesLiveData.postValue(t.results as MutableList<Result>?)
+                    }
 
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                movies = response.body()!!.results as MutableList<Result>
-                moviesLiveData.postValue(movies)
-                progress.visibility = View.GONE
-            }
-        })
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "onError: "+e.message)
+                    }
+
+                })
+        )
     }
 
     fun getNow(apiKey: String, page: Int, progress: ProgressBar){
-        moviesClient.getInstance()!!.getNowMovies(apiKey, page).enqueue(object : retrofit2.Callback<Movies>{
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.d(TAG, "onFailure: "+t.message)
-                progress.visibility = View.GONE
-            }
+        compositeDisposable.add(
+            moviesClient.getInstance().getNowMovies(apiKey, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableObserver<Movies>() {
+                    override fun onComplete() {
+                        Log.d(TAG, "onComplete: ")
+                        progress.visibility = View.GONE
+                    }
 
+                    override fun onNext(t: Movies) {
+                        moviesLiveData.postValue(t.results as MutableList<Result>?)
+                    }
 
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                movies = response.body()!!.results as MutableList<Result>
-                moviesLiveData.postValue(movies)
-                progress.visibility = View.GONE
-            }
-        })
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "onError: "+e.message)
+                    }
+
+                })
+        )
     }
 
     fun getUpcoming(apiKey: String, page: Int, progress: ProgressBar){
-        moviesClient.getInstance()!!.getUpcomingMovies(apiKey, page).enqueue(object : retrofit2.Callback<Movies>{
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.d(TAG, "onFailure: "+t.message)
-                progress.visibility = View.GONE
-            }
+        compositeDisposable.add(
+            moviesClient.getInstance().getUpcomingMovies(apiKey, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableObserver<Movies>() {
+                    override fun onComplete() {
+                        Log.d(TAG, "onComplete: ")
+                        progress.visibility = View.GONE
+                    }
 
+                    override fun onNext(t: Movies) {
+                        moviesLiveData.postValue(t.results as MutableList<Result>?)
+                    }
 
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                movies = response.body()!!.results as MutableList<Result>
-                moviesLiveData.postValue(movies)
-                progress.visibility = View.GONE
-            }
-        })
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "onError: "+e.message)
+                    }
+
+                })
+        )
     }
 
 
-    fun search(apiKey: String, title: String){
-        moviesClient.getInstance()!!.search(apiKey, title).enqueue(object : retrofit2.Callback<Movies>{
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Log.d(TAG, "onFailure: "+t.message)
-            }
+    fun search(apiKey: String, title: String, progress: ProgressBar){
+        compositeDisposable.add(
+            moviesClient.getInstance().search(apiKey, title)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableObserver<Movies>() {
+                    override fun onComplete() {
+                        Log.d(TAG, "onComplete: ")
+                        progress.visibility = View.GONE
+                    }
 
+                    override fun onNext(t: Movies) {
+                        moviesLiveData.postValue(t.results as MutableList<Result>?)
+                    }
 
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                movies = response.body()!!.results as MutableList<Result>
-                moviesLiveData.postValue(movies)
-            }
-        })
+                    override fun onError(e: Throwable) {
+                        Log.e(TAG, "onError: "+e.message)
+                        progress.visibility = View.GONE
+                    }
+
+                })
+        )
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
+    }
 }

@@ -6,15 +6,32 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PopMovies2"
         tools:ignore="AllowBackup">
-        <activity android:name=".ui.MovieDetailsActivity" />
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.WatchlistActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".ui.FavouriteActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ui.PersonWorksActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ui.SearchActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ui.MovieDetailsActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

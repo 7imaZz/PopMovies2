@@ -90,4 +90,8 @@ class MovieDetails {
     @Expose
     var voteCount: Int? = null
 
+    @SerializedName("genres")
+    @Expose
+    var genres: List<Genre>? = null
+
 }

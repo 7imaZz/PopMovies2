@@ -47,6 +47,8 @@ class MoviesAdapter(private val context: Context, var movies: MutableList<Result
 
         Picasso.get()
             .load(BASE_URL+IMAGE_SIZE+movies[position].poster_path)
+            .fit()
+            .centerCrop()
             .placeholder(R.drawable.placeholder_movie)
             .into(holder.posterImageView)
 

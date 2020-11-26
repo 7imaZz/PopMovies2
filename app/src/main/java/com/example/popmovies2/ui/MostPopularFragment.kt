@@ -1,5 +1,6 @@
 package com.example.popmovies2.ui
 
+import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
@@ -52,6 +53,9 @@ class MostPopularFragment : Fragment() {
         progressBar = view.findViewById(R.id.progress)
         pageNumTV = view.findViewById(R.id.page_num_tv)
 
+        next.visibility = View.VISIBLE
+        prev.visibility = View.VISIBLE
+
         moviesRV.adapter = adapter
 
         getMovies()
@@ -75,6 +79,7 @@ class MostPopularFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getMovies(){
         adapter!!.movies.clear()
 

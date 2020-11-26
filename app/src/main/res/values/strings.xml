@@ -7,4 +7,15 @@
     <string name="_25_02_1998">25/02/1998</string>
     <string name="terror_horror">Terror | Horror</string>
     <string name="search">Search</string>
+    <string name="en">EN</string>
+    <string name="mark_as_favourite">Mark As Favourite</string>
+    <string name="add_to_watchlist">Add To Watchlist</string>
+    <string name="story">Story</string>
+    <string name="director">Director</string>
+    <string name="cast">Cast</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="favourite">Favourite</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="page">Page</string>
+
 </resources>

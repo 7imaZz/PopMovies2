@@ -1,5 +1,6 @@
 package com.example.popmovies2.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -50,6 +51,9 @@ class NowPlayingFragment : Fragment() {
         progressBar = view.findViewById(R.id.progress)
         pageNumTV = view.findViewById(R.id.page_num_tv)
 
+        next.visibility = View.VISIBLE
+        prev.visibility = View.VISIBLE
+
         moviesRV.adapter = adapter
 
         getMovies()
@@ -73,6 +77,7 @@ class NowPlayingFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getMovies(){
         adapter!!.movies.clear()
 

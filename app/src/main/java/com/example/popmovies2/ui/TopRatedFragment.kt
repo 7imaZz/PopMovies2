@@ -1,5 +1,6 @@
 package com.example.popmovies2.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -49,7 +50,10 @@ class TopRatedFragment : Fragment() {
         val next = view.findViewById<CircleImageView>(R.id.next_btn)
         val prev = view.findViewById<CircleImageView>(R.id.prev_btn)
         progressBar = view.findViewById(R.id.progress)
-        pageNumTV = view.findViewById<TextView>(R.id.page_num_tv)
+        pageNumTV = view.findViewById(R.id.page_num_tv)
+
+        next.visibility = View.VISIBLE
+        prev.visibility = View.VISIBLE
 
         moviesRV.adapter = adapter
 
@@ -74,6 +78,7 @@ class TopRatedFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getMovies(){
         adapter!!.movies.clear()
 
