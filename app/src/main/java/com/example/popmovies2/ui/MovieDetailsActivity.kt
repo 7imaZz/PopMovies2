@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.popmovies2.R
 import com.example.popmovies2.adapters.DetailsItemAdapter
 import com.example.popmovies2.pojo.Result
@@ -24,7 +25,6 @@ import com.example.popmovies2.viewmodel.MovieDetailsViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.squareup.picasso.Picasso
 import java.util.*
 
 
@@ -129,8 +129,8 @@ class MovieDetailsActivity : AppCompatActivity() {
         lifecycle.addObserver(youTubePlayerView)
 
 
-        Picasso.get()
-            .load(BASE_URL + IMAGE_SIZE + res.poster_path)
+        Glide.with(this)
+            .load(BASE_URL+IMAGE_SIZE+res.poster_path)
             .placeholder(R.drawable.placeholder_movie)
             .into(posterImageView)
 
@@ -200,8 +200,8 @@ class MovieDetailsActivity : AppCompatActivity() {
             cast.crew!!.forEach {
                 if (it.job.equals("Director")) {
                     directorTextView.text = it.originalName
-                    Picasso.get()
-                        .load(BASE_URL + IMAGE_SIZE + it.profilePath)
+                    Glide.with(this)
+                        .load(BASE_URL+IMAGE_SIZE+it.profilePath)
                         .placeholder(R.drawable.placeholder_movie)
                         .into(directorImageView)
 

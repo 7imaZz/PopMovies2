@@ -10,11 +10,13 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.popmovies2.R
 import com.example.popmovies2.adapters.MoviesAdapter.MoviesViewHolder
 import com.example.popmovies2.pojo.Result
 import com.example.popmovies2.ui.MovieDetailsActivity
-import com.squareup.picasso.Picasso
+
 
 class MoviesAdapter(private val context: Context, var movies: MutableList<Result>) : RecyclerView.Adapter<MoviesViewHolder>() {
 
@@ -45,9 +47,10 @@ class MoviesAdapter(private val context: Context, var movies: MutableList<Result
 
         holder.rate.rating = (movies[position].vote_average!!*5)/10
 
-        Picasso.get()
-            .load(BASE_URL+IMAGE_SIZE+movies[position].poster_path)
-            .fit()
+
+
+        Glide.with(context)
+            .load(BASE_URL + IMAGE_SIZE + movies[position].poster_path)
             .centerCrop()
             .placeholder(R.drawable.placeholder_movie)
             .into(holder.posterImageView)

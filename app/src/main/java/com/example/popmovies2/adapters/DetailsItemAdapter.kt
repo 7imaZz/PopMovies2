@@ -10,12 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.popmovies2.R
 import com.example.popmovies2.pojo.Cast
 import com.example.popmovies2.pojo.Result
 import com.example.popmovies2.ui.MovieDetailsActivity
 import com.example.popmovies2.ui.PersonWorksActivity
-import com.squareup.picasso.Picasso
 
 class DetailsItemAdapter() : RecyclerView.Adapter<DetailsItemAdapter.DetailsItemViewHolder>() {
 
@@ -64,10 +64,10 @@ class DetailsItemAdapter() : RecyclerView.Adapter<DetailsItemAdapter.DetailsItem
             holder.textView1.text = casts[position].name
             holder.textView2.text = "( ${casts[position].character} )"
 
-            Picasso.get()
-                    .load(BASE_URL+IMAGE_SIZE+casts[position].profilePath)
-                    .placeholder(R.drawable.placeholder_movie)
-                    .into(holder.itemImageView)
+            Glide.with(context)
+                .load(BASE_URL+IMAGE_SIZE+casts[position].profilePath)
+                .placeholder(R.drawable.placeholder_movie)
+                .into(holder.itemImageView)
 
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, PersonWorksActivity::class.java)
@@ -81,10 +81,10 @@ class DetailsItemAdapter() : RecyclerView.Adapter<DetailsItemAdapter.DetailsItem
             holder.textView1.visibility = View.GONE
             holder.textView2.text = similarMovies[position].title
 
-            Picasso.get()
-                    .load(BASE_URL+IMAGE_SIZE+similarMovies[position].poster_path)
-                    .placeholder(R.drawable.placeholder_movie)
-                    .into(holder.itemImageView)
+            Glide.with(context)
+                .load(BASE_URL+IMAGE_SIZE+similarMovies[position].poster_path)
+                .placeholder(R.drawable.placeholder_movie)
+                .into(holder.itemImageView)
 
             holder.itemView.setOnClickListener {
                 val intent = Intent(context, MovieDetailsActivity::class.java)
