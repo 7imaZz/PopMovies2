@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.popmovies2.R
 import com.example.popmovies2.adapters.DetailsItemAdapter
 import com.example.popmovies2.pojo.Result
@@ -131,7 +132,9 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         Glide.with(this)
             .load(BASE_URL+IMAGE_SIZE+res.poster_path)
+            .centerCrop()
             .placeholder(R.drawable.placeholder_movie)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(posterImageView)
 
 
@@ -203,6 +206,7 @@ class MovieDetailsActivity : AppCompatActivity() {
                     Glide.with(this)
                         .load(BASE_URL+IMAGE_SIZE+it.profilePath)
                         .placeholder(R.drawable.placeholder_movie)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .into(directorImageView)
 
                     directorImageView.setOnClickListener { _ ->

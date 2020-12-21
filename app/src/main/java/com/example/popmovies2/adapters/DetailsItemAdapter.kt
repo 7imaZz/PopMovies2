@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.popmovies2.R
 import com.example.popmovies2.pojo.Cast
 import com.example.popmovies2.pojo.Result
@@ -67,6 +68,7 @@ class DetailsItemAdapter() : RecyclerView.Adapter<DetailsItemAdapter.DetailsItem
             Glide.with(context)
                 .load(BASE_URL+IMAGE_SIZE+casts[position].profilePath)
                 .placeholder(R.drawable.placeholder_movie)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.itemImageView)
 
             holder.itemView.setOnClickListener {
@@ -84,6 +86,7 @@ class DetailsItemAdapter() : RecyclerView.Adapter<DetailsItemAdapter.DetailsItem
             Glide.with(context)
                 .load(BASE_URL+IMAGE_SIZE+similarMovies[position].poster_path)
                 .placeholder(R.drawable.placeholder_movie)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(holder.itemImageView)
 
             holder.itemView.setOnClickListener {

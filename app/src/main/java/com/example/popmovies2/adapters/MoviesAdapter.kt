@@ -11,7 +11,7 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.popmovies2.R
 import com.example.popmovies2.adapters.MoviesAdapter.MoviesViewHolder
 import com.example.popmovies2.pojo.Result
@@ -53,6 +53,7 @@ class MoviesAdapter(private val context: Context, var movies: MutableList<Result
             .load(BASE_URL + IMAGE_SIZE + movies[position].poster_path)
             .centerCrop()
             .placeholder(R.drawable.placeholder_movie)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(holder.posterImageView)
 
         holder.itemView.setOnClickListener{

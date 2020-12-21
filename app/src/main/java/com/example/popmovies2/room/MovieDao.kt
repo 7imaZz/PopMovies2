@@ -14,6 +14,6 @@ interface MovieDao {
     @Query("DELETE FROM movies WHERE id=:id")
     fun deleteMovie(id: Int)
 
-    @Query("SELECT * FROM movies")
+    @Query("SELECT * FROM movies ORDER BY title ASC")
     fun getAllMovies(): List<Result>
 }
