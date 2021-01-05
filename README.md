@@ -18,3 +18,13 @@ Here's the specifics of what I used in this app:
 - SearchViews
 - Menus
 - And much more...
+
+## Screen Records
+
+### Surfing
+
+![Screen Record From App](https://media.giphy.com/media/ahCssx51iSHJvv6dZz/giphy.gif)
+
+### Favourite & Watchlist
+
+
