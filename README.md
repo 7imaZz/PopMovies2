@@ -27,4 +27,9 @@ Here's the specifics of what I used in this app:
 
 ### Favourite & Watchlist
 
+![Screen Record From App](https://media.giphy.com/media/kUVueRb6J3m9mKlkxz/giphy.gif)
+
+### Pagination
+
+![Screen Record From App](https://media.giphy.com/media/mw7XdUkACpfG4MfpFy/giphy.gif)
 
